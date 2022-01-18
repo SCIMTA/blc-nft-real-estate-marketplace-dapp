@@ -1,0 +1,63 @@
+.btn-1 {
+  font-family: Hack, monospace;
+  background: #0f0f6d;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1em;
+  padding: 0.6rem;
+  border: 0;
+  transition: all 0.5s;
+  border-radius: 5px;
+  width: auto;
+  position: relative;
+}
+.btn-2 {
+  font-family: Hack, monospace;
+  background: #0e8a84;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1em;
+  padding: 0.6rem;
+  border: 0;
+  transition: all 0.5s;
+  border-radius: 5px;
+  width: auto;
+  position: relative;
+}
+
+.btn-3 {
+  font-family: Hack, monospace;
+  background: #e48900;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1em;
+  padding: 0.6rem;
+  border: 0;
+  transition: all 0.5s;
+  border-radius: 5px;
+  width: auto;
+  position: relative;
+}
+input {
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: groove;
+  font-size: 16px;
+  width: 50%;
+  border-color: rgba(4, 4, 5, 0.1);
+  line-height: 32px;
+}
+input:focus {
+  outline: none;
+  border-color: rgba(4, 4, 5, 0.4);
+}
+body {
+  margin: 10%;
+  font-family: "Rubik";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.App {
+  text-align: center;
+}

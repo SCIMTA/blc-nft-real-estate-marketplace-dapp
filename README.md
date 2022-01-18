@@ -28,3 +28,7 @@ the ethereum blockchain.
 9. Right click the page, go down to Inspect, and then in the black window that opens, select Console from the top
 10. Mint some NFTs on your fake blockchain and have fun! The transaction will appear in the console after you approve it in
     the metamask popup!
+
+<p align="center">
+  <img src="gif.gif">
+</p>

@@ -185,8 +185,6 @@ class Application extends Component {
             </li>
           </ul>
         </nav>
-        <br></br>
-        <br></br>
         <h1 id="title"> Mint a House 🏠</h1>
         <p></p>
         <form>
@@ -217,7 +215,9 @@ class Application extends Component {
         >
           Mint NFT
         </button>
-        <p />
+        <br />
+        <br />
+        <br />
         <h1 id="title"> Danh sách token sở hữu và chuyển token </h1>
         <input
           type="text"
@@ -254,7 +254,9 @@ class Application extends Component {
             </button>
           </div>
         ))}
-
+        <br />
+        <br />
+        <br />
         <h1 style={{ marginTop: 30 }} id="title">
           Danh toàn bộ token
         </h1>

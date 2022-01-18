@@ -11,14 +11,17 @@ the ethereum blockchain.
 <p align="center">
   <img src="gif.gif">
 </p>
+
 ## Instructions
 
 1. Install metamask for chrome: https://metamask.io/download.html
 
 2. To get the script working, type the following commands into a new terminal window...
 
+- requirement environment : nodejs
 - git clone https://github.com/neckgamervn/nft-real-estate nft-realestate
 - `cd nft-realestate`
+- `npm install -g yarn`
 - `yarn`
 - `yarn start`
 

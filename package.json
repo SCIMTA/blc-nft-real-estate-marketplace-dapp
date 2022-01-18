@@ -5,6 +5,7 @@
   "author": "hoangnh",
   "dependencies": {
     "@openzeppelin/contracts": "^2.4.0",
+    "@truffle/hdwallet-provider": "^2.0.0",
     "bootstrap": "4.3.0",
     "dotenv": "^8.2.0",
     "react": "17.0.2",

@@ -156,6 +156,7 @@ class Application extends Component {
       .send({ from: this.state.chainaccount });
     console.log("house", house);
     console.log("success");
+    await this.getListNft();
     // this.setState((prevState) => ({
     //   homes: prevState.homes.concat({ ...house, tokenuri }),
     // }));

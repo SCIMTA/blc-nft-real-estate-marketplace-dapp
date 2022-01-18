@@ -24,7 +24,7 @@ the ethereum blockchain.
 - yarn install
 - yarn start
 
-6. run `npm install -g truffle` Then `truffle compile`. Then run `truffle migrate`. You will create a new `build` folder. Delete folder `src/build`, and move the new one into its place.
+6. run `npm install -g truffle` Then `truffle compile`. Then run `truffle migrate` or `truffle migrate --network rinkeby` for rinkeby testnet. You will create a new `build` folder. Delete folder `src/build`, and move the new one into its place.
 7. Open in a chrome browser: http://localhost:3000/
 8. Choose the ganache testing account in metamask which should be loaded with 100 ETH for testing, and choose the ganache
    network you added to connect.

@@ -19,7 +19,7 @@ the ethereum blockchain.
 2. To get the script working, type the following commands into a new terminal window...
 
 - requirement environment : nodejs
-- git clone https://github.com/neckgamervn/nft-real-estate nft-realestate
+- `git clone https://github.com/neckgamervn/nft-real-estate nft-realestate`
 - `cd nft-realestate`
 - `npm install -g yarn`
 - `yarn`

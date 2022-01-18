@@ -1,5 +1,7 @@
 # NFT
 
+Contract address: https://rinkeby.etherscan.io/address/0xfa11a2f947603604d3145573adba051710e646c5
+
 ## Overview
 
 This project is a full-stack web3 development, that is built in react/javascript, solidity and CSS. The program renders a
@@ -24,10 +26,13 @@ the ethereum blockchain.
 - yarn install
 - yarn start
 
-6. run `npm install -g truffle` Then `truffle compile`. Then run `truffle migrate` or `truffle migrate --network rinkeby` for rinkeby testnet. You will create a new `build` folder. Delete folder `src/build`, and move the new one into its place.
-7. Open in a chrome browser: http://localhost:3000/
-8. Choose the ganache testing account in metamask which should be loaded with 100 ETH for testing, and choose the ganache
+6. run `npm install -g truffle` Then `truffle compile`.
+
+7. (Option, can ignore this, this is deploy new token, `src/build` already exist) Then run `truffle migrate` or `truffle migrate --network rinkeby` for rinkeby testnet. You will create a new `build` folder. Delete folder `src/build`, and move the new one into its place.
+
+8. Open in a chrome browser: http://localhost:3000/
+9. Choose the ganache testing account in metamask which should be loaded with 100 ETH for testing, and choose the ganache
    network you added to connect.
-9. Right click the page, go down to Inspect, and then in the black window that opens, select Console from the top
-10. Mint some NFTs on your fake blockchain and have fun! The transaction will appear in the console after you approve it in
+10. Right click the page, go down to Inspect, and then in the black window that opens, select Console from the top
+11. Mint some NFTs on your fake blockchain and have fun! The transaction will appear in the console after you approve it in
     the metamask popup!

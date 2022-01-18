@@ -218,7 +218,7 @@ class Application extends Component {
           Mint NFT
         </button>
         <p />
-        <h1 id="title"> Danh token sở hữu và chuyển token </h1>
+        <h1 id="title"> Danh sách token sở hữu và chuyển token </h1>
         <input
           type="text"
           placeholder="Tới địa chỉ"

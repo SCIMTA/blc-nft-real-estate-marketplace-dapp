@@ -6,6 +6,9 @@ This project is a full-stack web3 development, that is built in react/javascript
 website, where clients can mint real estate by inputting the address and description of the house they would like to mint to
 the ethereum blockchain.
 
+<p align="center">
+  <img src="gif.gif">
+</p>
 ## Instructions
 
 1. Install metamask for chrome: https://metamask.io/download.html
@@ -28,7 +31,3 @@ the ethereum blockchain.
 9. Right click the page, go down to Inspect, and then in the black window that opens, select Console from the top
 10. Mint some NFTs on your fake blockchain and have fun! The transaction will appear in the console after you approve it in
     the metamask popup!
-
-<p align="center">
-  <img src="gif.gif">
-</p>

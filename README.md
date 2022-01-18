@@ -25,7 +25,7 @@ the ethereum blockchain.
 - `yarn`
 - `yarn start`
 
-## If using ganache, you can ignore if use rinkeby.
+## For ganache, you can ignore if use rinkeby.
 
 3. Install ganache (private blockchain for testing): https://www.trufflesuite.com/ganache
 4. Open ganache, do quickstart, then on the far right side of the first address click the key icon, copy the private key,

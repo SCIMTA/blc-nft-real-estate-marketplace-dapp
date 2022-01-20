@@ -222,102 +222,106 @@ class Application extends Component {
             </div>
           </div>
         )}
-        <div>
-          <h1 id="title"> Mint a House 🏠</h1>
-          <p></p>
-          <form>
-            <h3>Số nhà, địa chỉ : </h3>
+        <div style={{ flexDirection: "row", display: "flex" }}>
+          <div>
+            <h1 id="title"> Mint a House 🏠</h1>
+            <p></p>
+            <form>
+              <h3>Số nhà, địa chỉ : </h3>
+              <input
+                type="text"
+                placeholder="Ví dụ: 234 Hoàng Quốc Việt"
+                onChange={(event) =>
+                  this.setState({ homeaddress: event.target.value })
+                }
+              />
+              <h3>Thông tin nhà: </h3>
+              <input
+                type="text"
+                placeholder="Ví dụ: Nhà 5 phòng ngủ , ban công nhìn ra tây hồ"
+                onChange={(event) =>
+                  this.setState({ homedescription: event.target.value })
+                }
+              />
+            </form>
+            <br></br>
+            <button
+              className="btn-2"
+              id="mintButton"
+              onClick={() =>
+                this.mint(this.state.homeaddress, this.state.homedescription)
+              }
+            >
+              Mint NFT
+            </button>
+            <br />
+            <br />
+            <br />
+            <h1 id="title"> Danh sách token sở hữu và chuyển token </h1>
             <input
               type="text"
-              placeholder="Ví dụ: 234 Hoàng Quốc Việt"
+              placeholder="Tới địa chỉ"
               onChange={(event) =>
-                this.setState({ homeaddress: event.target.value })
+                this.setState({ to_address: event.target.value })
               }
             />
-            <h3>Thông tin nhà: </h3>
-            <input
-              type="text"
-              placeholder="Ví dụ: Nhà 5 phòng ngủ , ban công nhìn ra tây hồ"
-              onChange={(event) =>
-                this.setState({ homedescription: event.target.value })
-              }
-            />
-          </form>
-          <br></br>
-          <button
-            className="btn-2"
-            id="mintButton"
-            onClick={() =>
-              this.mint(this.state.homeaddress, this.state.homedescription)
-            }
-          >
-            Mint NFT
-          </button>
-          <br />
-          <br />
-          <br />
-          <h1 id="title"> Danh sách token sở hữu và chuyển token </h1>
-          <input
-            type="text"
-            placeholder="Tới địa chỉ"
-            onChange={(event) =>
-              this.setState({ to_address: event.target.value })
-            }
-          />
 
-          {this.state.homes.map((house, idx) => (
-            <div
-              key={idx}
-              style={{
-                marginTop: 30,
-              }}
-            >
-              <button
-                className="btn-3"
-                onClick={() => {
-                  window.open(house.tokenURI);
+            {this.state.homes.map((house, idx) => (
+              <div
+                key={idx}
+                style={{
+                  marginTop: 30,
                 }}
               >
-                Token id {house.tokenId} - {house.tokenData.address} -{" "}
-                {house.tokenData.description}
-              </button>
+                <button
+                  className="btn-3"
+                  onClick={() => {
+                    window.open(house.tokenURI);
+                  }}
+                >
+                  Token id {house.tokenId} - {house.tokenData.address} -{" "}
+                  {house.tokenData.description}
+                </button>
 
-              <button
-                className="btn-1"
-                style={{ width: 100 }}
-                onClick={() => {
-                  this.transferNft(house.tokenId);
+                <button
+                  className="btn-1"
+                  style={{ width: 100 }}
+                  onClick={() => {
+                    this.transferNft(house.tokenId);
+                  }}
+                >
+                  Transfer
+                </button>
+              </div>
+            ))}
+            <br />
+            <br />
+            <br />
+          </div>
+          <div>
+            <h1 style={{ marginTop: 30 }} id="title">
+              Danh toàn bộ token
+            </h1>
+            {this.state.all_homes.map((house, idx) => (
+              <div
+                key={idx}
+                style={{
+                  marginTop: 30,
                 }}
               >
-                Transfer
-              </button>
-            </div>
-          ))}
-          <br />
-          <br />
-          <br />
-          <h1 style={{ marginTop: 30 }} id="title">
-            Danh toàn bộ token
-          </h1>
-          {this.state.all_homes.map((house, idx) => (
-            <div
-              key={idx}
-              style={{
-                marginTop: 30,
-              }}
-            >
-              <button
-                className="btn-3"
-                onClick={() => {
-                  window.open(house.tokenURI);
-                }}
-              >
-                Token id {house.tokenId} - {house.tokenData.address} -{" "}
-                {house.tokenData.description}
-              </button>
-              <div>Owner address: {house.owner}</div>
-            </div>
-          ))}
+                <button
+                  className="btn-3"
+                  onClick={() => {
+                    window.open(house.tokenURI);
+                  }}
+                >
+                  Token id {house.tokenId} - {house.tokenData.address} -{" "}
+                  {house.tokenData.description}
+                </button>
+                <div>Owner address: {house.owner}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     );

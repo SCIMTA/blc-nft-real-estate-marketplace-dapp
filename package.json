@@ -4,7 +4,7 @@
   "description": "Minting Real Estate NFS",
   "author": "hoangnh",
   "dependencies": {
-    "@openzeppelin/contracts": "^2.4.0",
+    "@openzeppelin/contracts": "^4.4.2",
     "@truffle/hdwallet-provider": "^2.0.0",
     "bootstrap": "4.3.0",
     "dotenv": "^8.2.0",

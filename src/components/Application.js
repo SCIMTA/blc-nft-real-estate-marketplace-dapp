@@ -181,6 +181,8 @@ class Application extends Component {
       });
       this.setLoadingEnd();
     } catch (error) {
+      console.error(error);
+
       this.setLoadingEnd();
     }
   };
@@ -194,6 +196,8 @@ class Application extends Component {
         .send({ from: this.state.chainaccount });
       await this.getListNft();
     } catch (error) {
+      console.error(error);
+
       this.setLoadingEnd();
     } finally {
       this.hideTransferNFT();
@@ -240,6 +244,8 @@ class Application extends Component {
         .send({ from: this.state.chainaccount, value: price });
       await this.getListNft();
     } catch (error) {
+      console.error(error);
+
       this.setLoadingEnd();
     }
   };
@@ -258,6 +264,7 @@ class Application extends Component {
         .send({ from: this.state.chainaccount });
       await this.getListNft();
     } catch (error) {
+      console.error(error);
       this.setLoadingEnd();
     } finally {
       this.hideMintNFT();

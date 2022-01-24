@@ -45,7 +45,7 @@ export const ModalMintNFT = (props) => {
           }}
         />
         <p></p>
-        <img height={350} src={image} />
+        <img width={350} src={image} />
       </Modal.Body>
       <Modal.Footer>
         <Button

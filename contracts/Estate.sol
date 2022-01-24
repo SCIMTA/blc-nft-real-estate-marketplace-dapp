@@ -10,7 +10,7 @@ contract Estate is ERC721URIStorage, ERC721Enumerable, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
 
-    constructor() ERC721("GameItem", "ITM") {}
+    constructor() ERC721("BATDONGSAN", "BDS") {}
 
     function mint(string memory _tokenURI) public returns (uint256) {
         _tokenIds.increment();
@@ -109,7 +109,7 @@ contract Estate is ERC721URIStorage, ERC721Enumerable, Ownable {
     function buy(uint256 _tokenId) external payable {
         uint256 price = tokenIdToPrice[_tokenId];
         require(price > 0, "This token is not for sale");
-        // require(msg.value == price, "Incorrect value");
+        require(msg.value == price, "Incorrect value");
 
         address seller = ownerOf(_tokenId);
         _transfer(seller, _msgSender(), _tokenId);

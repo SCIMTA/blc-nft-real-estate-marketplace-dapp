@@ -15,7 +15,7 @@ export const ModalTransferNFT = (props) => {
       </Modal.Header>
       <Modal.Body style={{ textAlign: "center" }}>
         {token && <NFTItem token={token} />}
-        <h3>Chuyển NFT</h3>
+        <p></p>
         <input
           type="text"
           placeholder="Tới địa chỉ"

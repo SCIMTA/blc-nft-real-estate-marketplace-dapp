@@ -3,8 +3,11 @@ import web3 from "web3";
 import React, { Component } from "react";
 import "./Styles.css";
 import Estatejson from "../build/contracts/Estate.json";
-
 import { pinJSONToIPFS } from "./MintFunc";
+import ModalMintNFT from "./ModalMintNFT";
+import ModalTransferNFT from "./ModalTransferNFT";
+import ModalSellNFT from "./ModalSellNFT";
+import NFTItem from "./NFTItem";
 
 class Application extends Component {
   constructor(props) {
@@ -13,9 +16,6 @@ class Application extends Component {
       connect: false,
       chainaccount: "",
       chaincontract: null,
-      home_address: "",
-      to_address: "",
-      set_price: "",
       userid: "",
       ipfskey: "622e46a319ab34ff19eb",
       ipfssecret:
@@ -23,6 +23,12 @@ class Application extends Component {
       homes: [],
       not_my_homes: [],
       loading: true,
+      isShowMintNFT: false,
+      isShowTransferNFT: false,
+      isShowSellNFT: false,
+      transferNftData: null,
+      sellNftData: null,
+      balance: 0,
     };
   }
   async componentWillMount() {
@@ -85,7 +91,10 @@ class Application extends Component {
         ethNetwork_address
       );
       this.setState({ chaincontract: contract });
-      console.log(this.state.chaincontract);
+      const balance = await web3.eth.getBalance(accounts[0]);
+      this.setState({
+        balance: parseFloat(balance) / 10 ** 18,
+      });
     }
   }
 
@@ -150,7 +159,6 @@ class Application extends Component {
       let listTokenDetail = [];
       let listNotMyTokenDetail = [];
       for (let i = 0; i < listAllToken.length; i++) {
-        // const tokenId = await contract.methods.tokenByIndex(i).call();
         const tokenId = listAllToken[i];
         const tokenURI = await contract.methods.tokenURI(tokenId).call();
         const price = await contract.methods.priceOf(tokenId).call();
@@ -177,24 +185,26 @@ class Application extends Component {
     }
   };
 
-  transferNft = async (tokenId) => {
+  transferNft = async (tokenId, to_address) => {
     try {
       this.setLoadingStart();
       const contract = this.state.chaincontract;
       await contract.methods
-        .transferFrom(this.state.chainaccount, this.state.to_address, tokenId)
+        .transferFrom(this.state.chainaccount, to_address, tokenId)
         .send({ from: this.state.chainaccount });
       await this.getListNft();
     } catch (error) {
       this.setLoadingEnd();
+    } finally {
+      this.hideTransferNFT();
     }
   };
 
-  sellNft = async (tokenId) => {
+  sellNft = async (tokenId, set_price) => {
     try {
       this.setLoadingStart();
       const contract = this.state.chaincontract;
-      const price = parseFloat(this.state.set_price);
+      const price = parseFloat(set_price);
       const unitPrice = BigInt(price * 10 ** 18);
       await contract.methods
         .allowBuy(tokenId, unitPrice)
@@ -203,6 +213,8 @@ class Application extends Component {
     } catch (error) {
       console.log(error);
       this.setLoadingEnd();
+    } finally {
+      this.hideSellNFT();
     }
   };
   unSellNft = async (tokenId) => {
@@ -247,12 +259,71 @@ class Application extends Component {
       await this.getListNft();
     } catch (error) {
       this.setLoadingEnd();
+    } finally {
+      this.hideMintNFT();
     }
+  };
+
+  showMintNFT = () => {
+    this.setState({
+      isShowMintNFT: true,
+    });
+  };
+
+  hideMintNFT = () => {
+    this.setState({
+      isShowMintNFT: false,
+    });
+  };
+
+  showTransferNFT = (token) => {
+    this.setState({
+      isShowTransferNFT: true,
+      transferNftData: token,
+    });
+  };
+
+  hideTransferNFT = () => {
+    this.setState({
+      isShowTransferNFT: false,
+      transferNftData: null,
+    });
+  };
+
+  showSellNFT = (token) => {
+    this.setState({
+      isShowSellNFT: true,
+      sellNftData: token,
+    });
+  };
+
+  hideSellNFT = () => {
+    this.setState({
+      isShowSellNFT: false,
+      sellNftData: null,
+    });
   };
 
   render() {
     return (
       <div className="App">
+        <ModalMintNFT
+          isShow={this.state.isShowMintNFT}
+          onSubmit={this.mint}
+          onClose={this.hideMintNFT}
+        />
+        <ModalTransferNFT
+          isShow={this.state.isShowTransferNFT}
+          onSubmit={this.transferNft}
+          onClose={this.hideTransferNFT}
+          token={this.state.transferNftData}
+        />
+        <ModalSellNFT
+          isShow={this.state.isShowSellNFT}
+          onSubmit={this.sellNft}
+          onClose={this.hideSellNFT}
+          token={this.state.sellNftData}
+        />
         <span> </span>
         <nav className="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
           <a
@@ -265,9 +336,14 @@ class Application extends Component {
           </a>
           <ul className="navbar-nav px-3">
             <li className="nav-item text-nowrap d-none d-sm-none d-sm-block">
-              <small className="text-white">
+              <div className="text-white">
                 <span id="account">Địa chỉ ví: {this.state.chainaccount}</span>
-              </small>
+              </div>
+            </li>
+            <li className="">
+              <div className="text-white">
+                <span>Số lượng ETH: {this.state.balance}</span>
+              </div>
             </li>
           </ul>
         </nav>
@@ -282,141 +358,74 @@ class Application extends Component {
           </div>
         )}
         <div style={{ flexDirection: "row", display: "flex" }}>
-          <div style={{ flex: 1 }}>
-            <h1 id="title"> Mint a House 🏠</h1>
-            <p></p>
-            <form>
-              <h3>Số nhà, địa chỉ : </h3>
-              <input
-                type="text"
-                placeholder="Ví dụ: 234 Hoàng Quốc Việt"
-                onChange={(event) =>
-                  this.setState({ homeaddress: event.target.value })
-                }
-              />
-              <h3>Thông tin nhà: </h3>
-              <input
-                type="text"
-                placeholder="Ví dụ: Nhà 5 phòng ngủ , ban công nhìn ra tây hồ"
-                onChange={(event) =>
-                  this.setState({ homedescription: event.target.value })
-                }
-              />
-              <p />
-              <h3>Ảnh: </h3>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(event) => {
-                  var file = event.target.files[0];
-                  var reader = new FileReader();
-                  var url = reader.readAsDataURL(file);
-                  reader.onloadend = function (e) {
-                    this.setState({
-                      image: reader.result,
-                    });
-                  }.bind(this);
-                }}
-              />
-              <img height={350} src={this.state.image} />
-            </form>
-            <br></br>
-            <button
-              className="btn-2"
-              id="mintButton"
-              onClick={() =>
-                this.mint(
-                  this.state.homeaddress,
-                  this.state.homedescription,
-                  this.state.image
-                )
-              }
-            >
-              Mint NFT
+          <div
+            style={{
+              flex: 1,
+            }}
+          >
+            <button className="btn-3" onClick={this.showMintNFT}>
+              Tạo NFT
             </button>
-            <br />
-            <br />
-            <br />
-            <h1 id="title"> Danh sách token sở hữu và chuyển token </h1>
-            <input
-              type="text"
-              placeholder="Tới địa chỉ"
-              onChange={(event) =>
-                this.setState({ to_address: event.target.value })
-              }
-            />
             <p />
-            <input
-              type="text"
-              style={{ width: 200 }}
-              placeholder="Giá đặt lệnh bán (ETH)"
-              onChange={(event) =>
-                this.setState({ set_price: event.target.value })
-              }
-            />
+            <h1 id="title"> Danh sách token sở hữu</h1>
             {this.state.homes.map((house, idx) => (
               <div
                 key={idx}
                 style={{
                   marginTop: 30,
+                  flexDirection: "column",
+                  display: "flex",
+                  width: 380,
                 }}
               >
-                <button
-                  className="btn-3"
-                  onClick={() => {
-                    window.open(house.tokenURI);
-                  }}
-                >
-                  <div>Địa chỉ: {house.tokenData.address}</div>
-                  <div>Mô tả: {house.tokenData.description}</div>
-                  <img height={200} src={house.tokenData.image} />
-                  {house.price > 0 && (
-                    <div>Giá: {parseFloat(house.price) / 10 ** 18} ETH</div>
-                  )}
-                </button>
+                <NFTItem token={house} />
 
-                <button
-                  className="btn-1"
+                <div
                   style={{
-                    width: 100,
-                  }}
-                  onClick={() => {
-                    this.transferNft(house.tokenId);
+                    marginTop: 10,
                   }}
                 >
-                  Chuyển
-                </button>
+                  <button
+                    className="btn-1"
+                    style={{
+                      width: 100,
+                      marginRight: 10,
+                    }}
+                    onClick={() => {
+                      this.showTransferNFT(house);
+                    }}
+                  >
+                    Chuyển
+                  </button>
 
-                {house.isBuy ? (
-                  <button
-                    className="btn-2"
-                    style={{
-                      width: 100,
-                    }}
-                    onClick={() => {
-                      this.unSellNft(house.tokenId);
-                    }}
-                  >
-                    Huỷ lệnh bán
-                  </button>
-                ) : (
-                  <button
-                    className="btn-2"
-                    style={{
-                      width: 100,
-                    }}
-                    onClick={() => {
-                      this.sellNft(house.tokenId);
-                    }}
-                  >
-                    Đặt lệnh bán
-                  </button>
-                )}
+                  {house.isBuy ? (
+                    <button
+                      className="btn-2"
+                      style={{
+                        width: 150,
+                      }}
+                      onClick={() => {
+                        this.unSellNft(house.tokenId);
+                      }}
+                    >
+                      Huỷ lệnh bán
+                    </button>
+                  ) : (
+                    <button
+                      className="btn-2"
+                      style={{
+                        width: 150,
+                      }}
+                      onClick={() => {
+                        this.showSellNFT(house);
+                      }}
+                    >
+                      Đặt lệnh bán
+                    </button>
+                  )}
+                </div>
               </div>
             ))}
-            <br />
-            <br />
-            <br />
           </div>
           <div style={{ flex: 1 }}>
             <h1 style={{ marginTop: 30 }} id="title">
@@ -430,28 +439,21 @@ class Application extends Component {
                     marginTop: 30,
                   }}
                 >
-                  <button
-                    className="btn-3"
-                    onClick={() => {
-                      window.open(house.tokenURI);
-                    }}
-                  >
-                    <div>Địa chỉ: {house.tokenData.address}</div>
-                    <div>Mô tả: {house.tokenData.description}</div>
-                    <img height={200} src={house.tokenData.image} />
-                    {house.price > 0 && (
-                      <div>Giá: {parseFloat(house.price) / 10 ** 18} ETH</div>
-                    )}
-                  </button>
-                  <button
-                    className="btn-2"
-                    onClick={() => {
-                      this.buyNft(house.tokenId, house.price);
-                    }}
-                  >
-                    Mua: {parseFloat(house.price) / 10 ** 18} ETH
-                  </button>
-                  <div>Owner address: {house.owner}</div>
+                  <NFTItem token={house} />
+
+                  <div style={{ marginTop: 10 }}>
+                    <button
+                      className="btn-2"
+                      onClick={() => {
+                        this.buyNft(house.tokenId, house.price);
+                      }}
+                    >
+                      Mua
+                    </button>
+                  </div>
+                  <div style={{ marginTop: 10 }}>
+                    Owner address: {house.owner}
+                  </div>
                 </div>
               ) : (
                 <></>

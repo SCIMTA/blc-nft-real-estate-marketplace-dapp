@@ -75,8 +75,8 @@ contract Market is MarkerModifier, IMarket {
         _nft = IERC721(nft);
     }
 
-    function isForSell(uint256 _tokenId) public view returns (bool) {
-        return _tokenIdToPrice[_tokenId] > 0;
+    function priceOfToken(uint256 _tokenId) public view returns (uint256) {
+        return _tokenIdToPrice[_tokenId];
     }
 
     function openSellToken(uint256 _tokenId, uint256 _price)

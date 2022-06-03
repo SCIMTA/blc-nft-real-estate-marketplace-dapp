@@ -14,7 +14,6 @@ contract Estate is ERC721URIStorage, ERC721Enumerable, Ownable {
 
     function mint(string memory _tokenURI) public returns (uint256) {
         _tokenIds.increment();
-
         uint256 newItemId = _tokenIds.current();
         _mint(_msgSender(), newItemId);
         _setTokenURI(newItemId, _tokenURI);

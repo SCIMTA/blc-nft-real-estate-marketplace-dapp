@@ -4,32 +4,19 @@
   "description": "Minting Real Estate NFS",
   "author": "hoangnh",
   "dependencies": {
-    "@openzeppelin/contracts": "^4.4.2",
-    "@truffle/hdwallet-provider": "^2.0.0",
-    "bootstrap": "4.3.0",
-    "dotenv": "^8.2.0",
-    "react": "17.0.2",
-    "react-bootstrap": "1.5.2",
-    "react-dom": "17.0.2",
-    "react-scripts": "4.0.3",
-    "sqlite3": "^5.0.8",
-    "truffle": "5.3.3",
-    "truffle-flattener": "^1.4.4",
-    "web3": "1.3.5"
+    "@nomiclabs/hardhat-ethers": "^2.0.6",
+    "@nomiclabs/hardhat-etherscan": "^3.0.3",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@openzeppelin/contracts": "^4.6.0",
+    "@truffle/hdwallet-provider": "^2.0.8",
+    "chai": "^4.3.6",
+    "ethereum-waffle": "^3.4.4",
+    "ethers": "^5.6.6",
+    "hardhat": "^2.9.5",
+    "truffle": "^5.5.14"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts src/builds",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+    "compile": "truffle compile",
+    "deploy": "yarn compile && hardhat run --network rinkeby ./scripts/deploy.js"
+  }
 }
